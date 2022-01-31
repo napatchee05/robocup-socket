@@ -2,7 +2,6 @@ from custom_socket import CustomSocket
 import cv2
 import numpy as np
 
-NAME = "TEST"
 HOST = "127.0.0.1"
 PORT = 9005
 

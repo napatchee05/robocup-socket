@@ -7,12 +7,15 @@ from custom_socket import CustomSocket
 img = cv2.imread("test3.jpg")
 print img.shape
 
-host = "127.0.0.1"
-port = 9005
+host = socket.gethostname()
+port = 10000
 
-meanSocket = CustomSocket(host,port)
-mean = meanSocket.getMean(img)
-print(mean)
+c = CustomSocket(host,port)
+c.clientConnect()
+c.sendMsg(c.sock,"Hello World")
+x = c.recvMsg(c.sock)
+print(x)
+
 
 
 
