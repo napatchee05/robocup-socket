@@ -1,5 +1,6 @@
 import socket
 import struct
+import numpy as np
 
 class CustomSocket :
 
@@ -29,7 +30,13 @@ class CustomSocket :
 		return True
 
 	def sendMsg(self,sock,msg) :
-		msg = struct.pack('>I', len(msg)) + msg.encode('utf-8')
+		temp = msg
+		try :
+			temp = msg.encode('utf-8')
+		except UnicodeDecodeError as e :
+			# This message is an image
+			temp = temp
+		msg = struct.pack('>I', len(msg)) + temp
 		sock.sendall(msg)
 
 	def recvall(self,sock,n) :
@@ -46,7 +53,7 @@ class CustomSocket :
 		if not rawMsgLen :
 			return None
 		msgLen = struct.unpack('>I', rawMsgLen)[0]
-		return self.recvall(sock, msgLen).decode('utf-8')
+		return self.recvall(sock, msgLen)
 
 
 def main() :
@@ -56,10 +63,11 @@ def main() :
 
 	while True :
 		conn, addr = server.sock.accept()
-		print("Connected from",addr)
+		print("Client connected from",addr)
 		data = server.recvMsg(conn)
-		print(data)
-		server.sendMsg(conn,data[::-1])
+		img = np.frombuffer(data,dtype=np.uint8).reshape(720,1080,3)
+		print(img)
+		server.sendMsg(conn,"Dick")
 
 if __name__ == '__main__' :
 	main()	

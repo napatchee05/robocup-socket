@@ -12,7 +12,7 @@ port = 10000
 
 c = CustomSocket(host,port)
 c.clientConnect()
-c.sendMsg(c.sock,"Hello World")
+c.sendMsg(c.sock,img.tobytes())
 x = c.recvMsg(c.sock)
 print(x)
 
