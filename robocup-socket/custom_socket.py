@@ -30,21 +30,3 @@ class CustomSocket :
 		cs = socket.socket()
 		cs.connect((self.host,self.port))
 		return cs.recv(1024).decode('utf-8')
-
-# def main() :
-
-# 	img = cv2.imread("test3.jpg")
-# 	s = socket.socket()
-# 	s.connect(("127.0.0.1",9005))
-# 	s.sendall(img.tobytes())
-# 	s.close()
-# 	s2 = socket.socket()
-# 	s2.connect(("127.0.0.1",9005))
-# 	res = s2.recv(4096)
-# 	s2.close()
-# 	print res
-
-
-
-# if __name__ == '__main__':
-#     main()
