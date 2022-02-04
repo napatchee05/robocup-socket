@@ -51,12 +51,10 @@ class CustomSocket :
 		return data
 
 	def recvMsg(self,sock) :
-
 		rawMsgLen = self.recvall(sock, 4)
 		if not rawMsgLen :
 			return None
 		msgLen = struct.unpack('>I', rawMsgLen)[0]
-
 		return self.recvall(sock, msgLen)
 
 	def req(self,image) :
@@ -73,10 +71,11 @@ def main() :
 	while True :
 		conn, addr = server.sock.accept()
 		print("Client connected from",addr)
-		data = server.recvMsg(conn)
-		img = np.frombuffer(data,dtype=np.uint8).reshape(720,1080,3)
-		res = {"mean" : 0 , "mode" : 0 , "med" : 0}
-		server.sendMsg(conn,json.dumps(res))
+		while True :
+			data = server.recvMsg(conn)
+			img = np.frombuffer(data,dtype=np.uint8).reshape(720,1280,3)
+			res = {"mean" : 0 , "mode" : 0 , "med" : 0}
+			server.sendMsg(conn,json.dumps(res))
 
 if __name__ == '__main__' :
 	main()	
